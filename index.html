@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polybius Cipher</title>
+</head>
+<body>
+    <h1>Polybius Cipher</h1>
+    <form>
+        <label for="inputText">Input:</label><br>
+        <textarea id="inputText" name="inputText" rows="4" cols="50"></textarea><br>
+        <input type="button" value="Encipher" onclick="encipher()">
+        <input type="button" value="Decipher" onclick="decipher()"><br>
+        <label for="outputText">Output:</label><br>
+        <textarea id="outputText" name="outputText" rows="4" cols="50" readonly></textarea>
+    </form>
+
+    <script>
+    const polybiusSquare = [
+        ['8', 'T', '3', 'Z', 'J', '0'],
+        ['M', 'V', '6', 'A', 'X', 'Q'],
+        ['5', '9', 'I', 'B', '4', 'F'],
+        ['R', 'L', '2', '7', 'S', 'Y'],
+        ['K', 'E', '1', 'N', 'H', 'G'],
+        ['U', 'D', 'W', 'P', 'C', 'O']
+    ];
+    
+    const rowLabels = ['D', '1', 'E', '2', 'F', '3'];
+    const columnLabels = ['A', '4', 'B', '5', 'C', '6'];
+
+    function encipher() {
+        let inputText = document.getElementById('inputText').value.toUpperCase();
+        let outputText = '';
+        for (let char of inputText) {
+            for (let i = 0; i < polybiusSquare.length; i++) {
+                for (let j = 0; j < polybiusSquare[i].length; j++) {
+                    if (polybiusSquare[i][j] === char) {
+                        outputText += rowLabels[i] + columnLabels[j];
+                    }
+                }
+            }
+        }
+        document.getElementById('outputText').value = outputText;
+    }
+
+    function decipher() {
+        let inputText = document.getElementById('inputText').value;
+        let outputText = '';
+        for (let i = 0; i < inputText.length; i += 2) {
+            let rowLabel = inputText[i];
+            let columnLabel = inputText[i+1];
+            let rowIndex = rowLabels.indexOf(rowLabel);
+            let columnIndex = columnLabels.indexOf(columnLabel);
+            if (rowIndex !== -1 && columnIndex !== -1) {
+                outputText += polybiusSquare[rowIndex][columnIndex];
+            }
+        }
+        document.getElementById('outputText').value = outputText;
+    }
+    </script>
+</body>
+</html>
