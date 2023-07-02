@@ -124,10 +124,6 @@
         textbox.setSelectionRange(0, 99999); // For mobile devices
         document.execCommand("copy");
         alert("Copied to clipboard!");
-
-        // Restore the selection range to avoid clearing the text
-    window.getSelection().removeAllRanges();
-    textbox.blur();
     }
     </script>
 </body>
