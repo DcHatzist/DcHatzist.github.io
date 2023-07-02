@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Russian Army Code</title>
+</head>
+<body>
+    <h1>Russian Army Code</h1>
+    <form>
+        <label for="inputText">Message/Incoming Message input:</label><br>
+        <textarea id="inputText" name="inputText" rows="5" cols="50"></textarea>
+        <br>
+        <input type="button" value="Encipher with Polybius Square" onclick="encipher()">
+        <input type="button" value="Decipher with Polybius Square" onclick="decipher()">
+        <input type="button" value="Reverse incoming message to rows" onclick="reverseCombine()" style="margin-left: 10px;">
+        <input type="button" value="Combine rows from top to bottom" onclick="uncombineRows()">
+        <br>
+        <label for="outputText">Output:</label><br>
+        <textarea id="outputText" name="outputText" rows="5" cols="50" readonly></textarea>
+        <br>
+        <input type="button" value="Break Down to Rows" onclick="breakDown()">
+        <br>
+        <label for="output2">Enciphered text broken down to Rows of 10 characters:</label><br>
+        <textarea id="output2" name="output2" rows="5" cols="50" readonly></textarea>
+        <br>
+        <input type="button" value="Combine Rows from bottom to top" onclick="combineRows()">
+        <br>
+        <label for="output3">Inverse enciphered string:</label><br>
+        <textarea id="output3" name="output3" rows="5" cols="50" readonly></textarea>
+        <button onclick="copyText('output3')">Copy</button>
+        <br>
+        <label for="output4">Incoming message reversed to rows:</label><br>
+        <textarea id="output4" name="output4" rows="5" cols="50" readonly></textarea>
+        <br>
+        <label for="output5">Incoming enciphered text to decipher:</label><br>
+        <textarea id="output5" name="output5" rows="5" cols="50" readonly></textarea>
+        <button onclick="copyText('output5')">Copy</button>
+    </form>
+
+    <script>
+    const polybiusSquare = [
+        ['8', 'T', '3', 'Z', 'J', '0'],
+        ['M', 'V', '6', 'A', 'X', 'Q'],
+        ['5', '9', 'I', 'B', '4', 'F'],
+        ['R', 'L', '2', '7', 'S', 'Y'],
+        ['K', 'E', '1', 'N', 'H', 'G'],
+        ['U', 'D', 'W', 'P', 'C', 'O']
+    ];
+    
+    const rowLabels = ['J', '7', 'L', '6', 'F', '2'];
+    const columnLabels = ['Q', '4', 'D', '9', 'V', '5'];
+
+    function encipher() {
+        let inputText = document.getElementById('inputText').value.toUpperCase();
+        let outputText = '';
+        for (let char of inputText) {
+            for (let i = 0; i < polybiusSquare.length; i++) {
+                for (let j = 0; j < polybiusSquare[i].length; j++) {
+                    if (polybiusSquare[i][j] === char) {
+                        outputText += rowLabels[i] + columnLabels[j];
+                    }
+                }
+            }
+        }
+        document.getElementById('outputText').value = outputText;
+    }
+
+    function decipher() {
+        let inputText = document.getElementById('inputText').value;
+        let outputText = '';
+        for (let i = 0; i < inputText.length; i += 2) {
+            let rowLabel = inputText[i];
+            let columnLabel = inputText[i+1];
+            let rowIndex = rowLabels.indexOf(rowLabel);
+            let columnIndex = columnLabels.indexOf(columnLabel);
+            if (rowIndex !== -1 && columnIndex !== -1) {
+                outputText += polybiusSquare[rowIndex][columnIndex];
+            }
+        }
+        document.getElementById('outputText').value = outputText;
+    }
+    
+    function breakDown() {
+        let outputText = document.getElementById('outputText').value;
+        let brokenText = '';
+        for (let i = 0; i < outputText.length; i += 10) {
+            brokenText += outputText.substring(i, i + 10) + '\n';
+        }
+        document.getElementById('output2').value = brokenText.trim();
+    }
+    
+    function combineRows() {
+        let brokenText = document.getElementById('output2').value;
+        let combinedText = '';
+        let rows = brokenText.trim().split('\n');
+        for (let i = rows.length - 1; i >= 0; i--) {
+            combinedText += rows[i];
+        }
+        document.getElementById('output3').value = combinedText;
+    }
+    
+    function reverseCombine() {
+        let inputText = document.getElementById('inputText').value;
+        let reversedText = '';
+        let rowLength = 10;
+        for (let i = inputText.length - rowLength; i >= 0; i -= rowLength) {
+            reversedText += inputText.substring(i, i + rowLength) + '\n';
+        }
+        document.getElementById('output4').value = reversedText.trim();
+    }
+    
+    function uncombineRows() {
+        let reversedCombinedText = document.getElementById('output4').value;
+        let uncombinedText = '';
+        let rows = reversedCombinedText.trim().split('\n');
+        for (let i = 0; i < rows.length; i++) {
+            uncombinedText += rows[i];
+        }
+        document.getElementById('output5').value = uncombinedText;
+    }
+
+    function copyText(textboxId) {
+        let textbox = document.getElementById(textboxId);
+        textbox.select();
+        textbox.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+    }
+    </script>
+</body>
+</html>
