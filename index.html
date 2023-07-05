@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Extended Beaufort Cipher & Morse Code Translator</title>
+    <title>Russian army encryption and transmission service</title>
     <style>
         textarea, label, button {
             display: block;
@@ -30,10 +30,10 @@
     </style>
 </head>
 <body>
-    <h1>Extended Beaufort Cipher & Morse Code Translator</h1>
+    <h1>Russian army encryption and transmission service</h1>
     <div class="container">
         <div class="block">
-            <h2>Beaufort Cipher</h2>
+            <h2>Cipher</h2>
             <form>
                 <label for="inputText">Message:</label>
                 <textarea id="inputText" rows="5" cols="50"></textarea>
@@ -41,7 +41,7 @@
                 <label for="key">Key:</label>
                 <input type="text" id="key" name="key" />
                 <div class="button-group">
-                    <button type="button" onclick="encipher()">Encipher</button><button type="button" onclick="decipher()">Decipher</button>
+                    <button type="button" onclick="encipher()">Encrypt</button><button type="button" onclick="decipher()">Decrypt</button>
                 </div>
                 <label for="outputText">Output:</label>
                 <textarea id="outputText" rows="5" cols="50" readonly></textarea>
@@ -52,13 +52,13 @@
         <div class="block">
             <h2>Morse Code Translator</h2>
             <form>
-                <label for="morseInput">Input:</label>
+                <label for="morseInput">Message:</label>
                 <textarea id="morseInput" rows="5" cols="50"></textarea>
                 <button type="button" class="clear-button" onclick="clearInput('morseInput')">Clear</button>
                 <div class="button-group">
-                    <button type="button" onclick="translateMorseToEnglish()">Translate to English</button><button type="button" onclick="translateEnglishToMorse()">Translate to Morse</button>
+                    <button type="button" onclick="translateMorseToEnglish()">Morse to English</button><button type="button" onclick="translateEnglishToMorse()">English to Morse</button>
                 </div>
-                <label for="morseOutput">Output:</label>
+                <label for="morseOutput">Translation:</label>
                 <textarea id="morseOutput" rows="5" cols="50" readonly></textarea>
                 <button type="button" class="copy-button" onclick="copyOutput('morseOutput')">Copy</button>
                 <button type="button" class="clear-button" onclick="clearOutput('morseOutput')">Clear</button>
